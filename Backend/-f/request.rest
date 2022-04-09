@@ -1,0 +1,27 @@
+GET http://localhost:4000/register
+
+################################
+POST http://localhost:4000/register
+Content-Type: application/json
+
+{
+    "name":"aditya",
+    "email":"aditya@gmail.com",
+    "password":"aditya",
+    "phonenumber":"123456789"
+}
+################################
+POST http://localhost:4000/register/login
+Content-Type: application/json
+
+{
+    "email":"salmankhh10@gmail.com",
+    "password":"salman123"
+}
+################################
+
+Post http://localhost:4000/upload
+
+################################
+
+GET  http://localhost:4000/cloud-upload

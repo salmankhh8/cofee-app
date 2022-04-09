@@ -1,0 +1,375 @@
+/////////////below will step by step guide for bakcend////////////////////////////////
+
+
+ step 1////////////////////// step 1
+
+  create folder name it backend 
+cd to backend folder install express
+below comand :-
+------------------------------------
+Install Express Framework 
+
+https://www.npmjs.com/package/express-generator
+
+npm install -g express-generator
+
+express -e -f (ejs templating engine)
+
+install dependencies:
+npm install
+npm start
+
+////////////////////////////////////////// step 2
+
+install nodemon, cors 
+
+new file in routes. folder
+-------------------------------------------
+new file review.js
+
+var express = require('express');
+var router = express.Router();
+
+
+router.get('/', function(req, res){
+    const review=[{
+        name: "salman",
+        review:"product is good",
+        date: new Date(),
+    },
+    {
+        name:"aditya",
+        review:"prductis value for money",
+        date: new Date(),
+    }
+]
+
+
+    res.send(review);
+});
+
+module.exports = router
+
+
+call above in app.js file and also import cors there
+
+---------------------------------------------
+var cors= require('cors');
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
+var reviewsRouter = require('./routes/review');
+
+app.use(cors())
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/reviews', reviewsRouter);
+
+--------------------------------------------
+
+npm start and confirm in browser
+
+//////////////////////////////////////////////step-3 connect to the mongodb
+
+create cluster 0 shared 
+
+username will be in database acess and passwrd will be in edit
+salmankhh8   salmankhh8
+
+var mongoose = require('mongoose');
+require("dotenv/config")
+
+mongoose.connect(process.env.DB_connection, ()=>console.log("mongodb connected"))
+
+
+var axios = require('axios');
+var data = JSON.stringify({
+    "collection": "review",
+    "database": "cofee",
+    "dataSource": "Cluster0",
+    "projection": {
+        "_id": 1
+    }
+});
+            
+var config = {
+    method: 'post',
+    url: 'https://data.mongodb-api.com/app/data-vupzh/endpoint/data/beta/action/findOne',
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Headers': '*',
+        'api-key': 'epW9Mx8cTorJIk75BhnXro7rZredkig6clVDlo3e7ekeMum3X55j8wbcUnglik02'
+    },
+    data : data
+};
+            
+axios(config)
+    .then(function (response) {
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+///////////////////////////////////////////////////////step 3 make a post get request reest for registered users
+
+
+var express = require('express');
+var router = express.Router();
+var{MongoClient, ObjectId}= require('mongodb')
+
+ const url= "mongodb+srv://salmankhh8:salmankhh8@cluster0.1r0c2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const registerClient = new MongoClient(url)
+registerClient.connect(()=>console.log("mongodb connected"))
+
+const database = registerClient.db("cofee")
+var registerCollection = database.collection("register")
+
+
+router.post("/", function(req, res){
+    const insertQuery={
+        name:req.body.name,
+        email:req.body.email,
+        password:req.body.password,
+        phonenumber:req.body.phonenumber,
+    }
+    registerCollection.insertOne(insertQuery, function (err,result) {
+        if (err) throw err
+        res.send({status:"Registered sucessfully"})
+    })
+})
+
+module.exports = router
+////////////////////////////////////////////////////////////step 5 hashing and salting for password
+
+router.post("/", (req, res) => {
+  var encPassword = req.body.password; // storing in variables
+  var salt = bcrypt.genSaltSync(10); // salting of 10 rounds
+  var newPassword = bcrypt.hashSync(encPassword, salt); // hashing the password and salting it
+  const insertQuery = {
+    name: req.body.name,
+    email: req.body.email,
+    password: newPassword,
+    phonenumber: req.body.phonenumber,
+  };
+  registerCollection.insertOne(insertQuery, function (err, result) {
+    if (err) {
+      console.log(err);
+      if (err.code === 11000) {
+        res.send({ status: "username already exist" });
+      } else {
+        throw err;
+      }
+    } else {
+      res.send({ status: "Registered sucessfully" });
+      console.log("encrypted to ", newPassword);
+    }
+  });
+});
+
+//////////////////////////////////////////////////step 6 create login authintoication
+
+
+router.post("/login", async (req, res) => {
+    let { email, password } = req.body;
+    console.log(email, password);
+    const response = await verifyUser(email, password);
+    console.log(response);
+    if (response.status === "ok") {
+      res.cookie("token", response.token, {
+        maxAge: 2 * 60 * 60 * 1000,
+        httpOnly: false,
+      });
+      console.log({
+        status: 201,
+        data: response.data,
+      });
+      res.json({
+        data: response.data,
+        token: response.token,
+      });
+    } else {
+      res.send(response);
+    }
+  });
+  const verifyUser = async (email, password) => {
+    try {
+      const user = await registerCollection.findOne({ email: email });
+      console.log(user);
+      if (!user) {
+        return {
+          status: "error",
+          error: "user Not found",
+        };
+      } else {
+        if (await bcrypt.compare(password, user.password)) {
+          var token = jwt.sign(
+            { id: user._id, user: user.email, type: "user" },
+            JWT_SECRET
+          );
+          return {
+            status: "ok",
+            token: token,
+            data: user,
+          };
+        } else
+          return {
+            status: "error",
+            error: "invalid password",
+          };
+      }
+    } catch (error) {
+      console.log(error);
+      return {
+        status: "error",
+        error: error,
+      };
+    }
+  };
+
+  //////////////////////////////////////////upload file for registration 
+
+  const express = require("express");
+var router = express.Router();
+require("dotenv").config();
+var { MongoClient, ObjectId } = require("mongodb");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.jwt;
+const bcrypt = require("bcryptjs");
+var multer = require("multer");
+const path = require("path");
+const app = require("../app");
+const url = process.env.DB_CONNECTION;
+const uploadClient = new MongoClient(url);
+uploadClient.connect(()=>console.log("mongodb connected"));
+
+const database = uploadClient.db("cofee");
+const uploadCollection = database.collection("upload");
+
+const storage = multer.diskStorage({
+  destination: "./upload/images",// selectiong destination for storage 
+  filename: (req, file, cb) => {
+    return cb(
+      null,
+      `${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`// creating unique identity no for each image
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+
+router.use("/user", express.static("upload/images"));
+router.post("/", upload.single("user"), (req, res) => {// single filr parameter
+  var encPassword = req.body.password; // storing in variables
+  var salt = bcrypt.genSaltSync(10); // salting of 10 rounds
+  var newPassword = bcrypt.hashSync(encPassword, salt); // hashing the password and salting it
+  const files = req.file;
+  const fileDetails = {
+    file: files,
+    name:req.body.name, 
+    email:req.body.email,
+    password:newPassword,
+    number:req.body.password
+  };
+  uploadCollection.insertOne(fileDetails, function (err, result) {
+    if (err) {
+      console.log(err);
+      if (err.code === 11000) {
+        res.send({ status: "username already exist" });
+      } else {
+        throw err;
+      }
+    } else {
+      res.json({
+        sucess: 1,
+        profile_url: `http://localhost:4000/profile/${req.file.filename}`, // sending file url
+        data: fileDetails,
+      });
+      console.log("encrypted to ", newPassword);
+    }
+  });
+  console.log(req.file);
+
+  // res.send({ status:"successfully uploaded"})
+});
+
+router.get("/", (req, res) => {
+    uploadCollection.find({}).toArray(function (err, result) {
+        if (err) throw err;
+        res.send(result);
+      });
+})
+
+router.use(errHandler);
+function errHandler(err, req, res, next) {
+  if (err instanceof multer.MulterError) {
+    res.json({
+      sucess: 0,
+      message: "file is too !large",
+    });
+  }
+}
+
+
+router.post("/login", async (req, res) => {
+  let { email, password } = req.body;
+  console.log(email, password);
+  const response = await verifyUser(email, password);
+  console.log(response);
+  if (response.status === "ok") {
+    res.cookie("token", response.token, {
+      maxAge: 2 * 60 * 60 * 1000,
+      httpOnly: false,
+    });
+    console.log({
+      status: 201,
+      data: response.data,
+    });
+    res.json({
+      data: response.data,
+      token: response.token,
+    });
+  } else {
+    res.send(response);
+  }
+});
+const verifyUser = async (email, password) => {
+  try {
+    const user = await uploadCollection.findOne({ email: email });
+    console.log(user);
+    if (!user) {
+      return {
+        status: "error",
+        error: "user Not found",
+      };
+    } else {
+      if (await bcrypt.compare(password, user.password)) {
+        var token = jwt.sign(
+          { id: user._id, user: user.email, type: "user" },
+          JWT_SECRET
+        );
+        return {
+          status: "ok",
+          token: token,
+          data: user,
+        };
+      } else
+        return {
+          status: "error",
+          error: "invalid password",
+        };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      status: "error",
+      error: error,
+    };
+  }
+};
+
+
+
+module.exports = router;
