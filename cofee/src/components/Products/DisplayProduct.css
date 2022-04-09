@@ -1,0 +1,232 @@
+.DisplayProduct{
+    padding: 0 9rem;
+    color: #fff;
+    font-size: 2rem;
+    column-gap: 2rem;
+    height: 100%;
+}
+
+div .product_Category{
+    overflow: hidden;
+    width: 25%;
+    padding: 0 1em;
+    height: 77%;
+    position: fixed;
+    /* display: none; */
+}
+
+div .product_Category:hover{
+    overflow-y:scroll;
+    overflow-x: hidden;
+}
+.displaySelectedProduct{
+    width: 100%;
+    left: 50%;
+    overflow:auto;
+    margin-left: 34rem;
+}
+.add_product_button{
+    margin-top: 10rem;
+    display:flex;
+    align-items: center;
+    justify-content: flex-end;    
+}
+/* align-items: center; align item c=vertically center */
+ 
+.add_product_button .catagory_mobile{
+    font-size: 2rem;
+    color: #fff;
+    display: none;
+    cursor: pointer;
+}
+.Product_Category_Details{
+font-size:2rem;
+padding:.1rem;
+transition: .1s linear
+}
+.Product_Category_Details:hover{
+    background-color: white;
+    color: black;
+    padding-left: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+ .product_display_parent{
+  
+    position:fixed !important;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    padding-left:1rem;
+}
+.product_display_parent:hover{
+    overflow-y:scroll !important; 
+    overflow-x: hidden !important;
+}
+.product_display_children{
+    width: 20rem;
+    height: auto;
+    padding: 1rem 1rem;
+
+
+}
+.product_display_children_price{
+    font-size:2rem;
+    font-weight:bold;
+}
+.product_display_children_Image{
+    height: 14rem;
+
+    overflow: hidden;
+}
+
+.product_display_children_Image Img{
+    object-fit: cover;
+    height: 100%;
+}
+
+.product_display_children_Image Img:hover{
+    transform: scale(1.2);
+    transform-origin: 50% 50%;
+}
+
+.product_display_children_description{
+    font-size:1.4rem;
+}
+
+.product_display_children_description{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.product_display_children_button Button{
+    width:100%;
+    font-size: 1.5rem;
+    padding:.5rem;
+}
+
+.product_display_children span{
+    color: grey;
+}
+
+
+
+@media(max-width:900px){
+    .DisplayProduct{
+        padding-left: 0;
+    }
+   div .product_Category{
+       left: -100%;
+    }
+   div .product_Category_600{
+       left: 2rem;
+       transform: translateX(1);
+       z-index: 2;
+       background-color: black;
+       width: 50%;
+   }
+    .add_product_button{
+        padding: 1rem 4rem;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .add_product_button .catagory_mobile{
+        display: block;
+    }
+    .product_display_parent{
+        font-size: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .displaySelectedProduct{
+        margin: 0;
+        font-size: 2rem;
+       
+    }
+    .product_display_children{
+        align-items: center;
+        width: 100%;
+    }
+    .product_display_children span{
+        color: grey;
+    }
+    .product_display_children_Image{
+        width: 100%;
+        height: 15rem;
+    }
+    .product_display_children_Image Img{
+        width: 100%;
+    }
+    .product_display_children_description{
+        display: none;
+    }
+    .product_display_children_price{
+        font-size:1.5rem;
+    }
+    .product_display_children_price span{
+        color: grey;
+    }
+
+    .product_display_children_button Button{
+        font-size:1.4rem;
+    }
+}
+@media(max-width:600px){
+ .DisplayProduct{
+     padding-left: 0;
+     height: 100vh;
+ }
+div .product_Category{
+    left: -100%;
+ }
+div .product_Category_600{
+    left: 2rem;
+    transform: translateX(1);
+    z-index: 2;
+    background-color: black;
+    width: 50%;
+}
+ .add_product_button{
+     padding: 1rem 4rem;
+     display: flex;
+     justify-content: space-between;
+ }
+ 
+ .add_product_button .catagory_mobile{
+     display: block;
+ }
+    .product_display_parent{
+        font-size: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .displaySelectedProduct{
+        margin: 0;
+        font-size: 2rem;
+       
+    }
+    .product_display_children{
+        align-items: center;
+        width: 30rem;
+    }
+    .product_display_children_Image{
+        width: 100%;
+        height: 15rem;
+    }
+    .product_display_children_Image Img{
+        width: 100%;
+    }
+    .product_display_children_description{
+        display: none;
+    }
+    .product_display_children_price{
+        font-size:2.5rem;
+    }
+    .product_display_children_button Button{
+        font-size: 1.8rem;
+        padding: 0.6rem;
+    }
+}

@@ -1,0 +1,141 @@
+.add_Product_Container{
+    margin-top:14rem;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    color: #fff;
+    grid-column-gap: 1rem;
+    font-size: 1.9rem;
+}
+
+.add_upload_Image{
+    border: 1px solid #fff;
+    margin-left: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height:62rem;
+    column-gap: .5rem;
+    row-gap: .5rem;
+}
+
+
+.add_product_item{
+    border: 1px solid rgb(63, 36, 36);
+    padding-left:1rem;
+    
+}
+
+.upload_main_image{
+    grid-column-start: 1;
+    grid-column-end:3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    width: 40rem;
+    height: 40rem;
+}
+
+img{
+    margin:  auto;
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+}
+
+.add_supporting_image_1{
+    object-fit: cover;
+    height: 100%;
+    grid-row-start: 1;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-end: 2;
+}
+.add_supporting_image_2{
+    
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+.add_supporting_image_3{
+    
+    grid-row-start: 3;
+    grid-column-start: 3;
+    grid-column-end: 4;
+    grid-row-end: 4;
+}
+.add_supporting_image_4{
+    
+    grid-row-start: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-end: 4;
+}
+
+.add_supporting_image_5{
+    border: 30px solid #fff; 
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-column-end: 4;
+}
+
+.add_product_name Input{
+    width: 42rem;
+    height: 4rem;
+    font-size: 2rem;
+    padding:1rem;
+    background-color: black;
+    color: #ffff;
+}
+
+.add_product_price Input {
+    width: 42rem;
+    height: 4rem;
+    font-size: 2rem;
+    padding:1rem;
+    background-color: black;
+    color: #ffff;
+    border: 1px solid #fff;
+}
+.add_product_description textarea {
+    width: 42rem;
+    
+    height: 7rem;
+    font-size: 2rem;
+    padding:1rem;
+    background-color: black;
+    color: #ffff;
+    border: 1px solid #fff; 
+    border-radius: 10px;
+}
+
+
+.inputDropDown{
+    background-color: black;
+    width: 42rem;
+    
+ }
+ @media(max-width:800px){
+    .add_Product_Container{
+        display:block;
+        padding: 0 6rem;
+    }
+     .add_upload_Image{
+        display:grid;
+        width: auto !important;
+        margin-bottom: 2rem;
+        height: 100%;
+    }
+ }
+
+@media(max-width: 600px){
+    .add_Product_Container{
+        display:block;
+        padding: 0 6rem;
+    }
+    .add_upload_Image{
+        display:block;
+        width: 100%;
+        margin-bottom: 2rem;
+        height: 100%;
+    }
+}

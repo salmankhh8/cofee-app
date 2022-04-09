@@ -1,0 +1,72 @@
+.skeleton  {
+    animation: skeleton  .7s linear infinite alternate; 
+}
+
+@keyframes skeleton   {
+    0%{
+        background-color: rgb(87, 86, 86)
+    }
+
+    100%{
+        background-color: rgb(168, 166, 166)
+       }
+}
+
+.skeleton_parenrt{
+    display: flex;
+    flex-wrap: wrap;
+}
+.loading_skeleton_body{
+    margin: 2rem 2rem ;
+    font-size: 2rem;
+    width: 17rem;
+    color: white;
+}
+.loading_skeleton_body .image{
+    width: 17rem;
+    height:14rem;
+    background-color:grey;
+    border-radius: 10px;
+}
+
+.loading_skeleton_body .title{
+    margin-top: 1rem;
+    width: 16rem;
+    height: 2rem;
+    background-color:grey;
+    border-radius: 10px;
+
+
+}
+.loading_skeleton_body .price{
+    margin-top: 1rem;
+    width: 9rem;
+    height: 2rem;
+    background-color:grey;
+    border-radius: 10px;
+
+}
+
+.loading_skeleton_body .description{
+    margin-top: 1rem;
+    width: 17rem;
+    height: 2rem;
+    background-color: grey;
+    border-radius: 10px;
+
+}
+.loading_skeleton_body .view{
+    margin-top: 1rem;
+    width: 17rem;
+    height: 4rem;
+    background-color: grey;
+    border-radius: 10px;
+}
+
+.laoderBar{
+    width: 17rem;
+    height: 100vh;
+    margin-left: 10rem;
+}
+
+

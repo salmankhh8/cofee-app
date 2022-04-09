@@ -1,0 +1,22 @@
+export  const Coffee =()=> [
+    {"name":"Arabica"},
+    {"name":"Robusta"},
+    {"name":"Black-Cofee"},
+    {"name":"Decaf"},
+    {"name":"Espresso"},
+    {"name":"Latte"},
+    {"name":"Cappuccino"},
+    {"name":"Macchiato"},
+    {"name":"Americano"},
+    {"name":"Café au Lait"},
+    {"name":"Cortado"},
+    {"name":"Flat White"},
+    {"name":"Mocha Latte"},
+    {"name":"Red Eye"},
+    {"name":"Irish Coffee"},
+    {"name":"Iced Coffee(Cold Coffe)"},
+    {"name":"Iced latte(Cold Coffe)"},
+    {"name":"Cold Brew(Cold Coffe)"},
+    {"name":"Nitro Cold Brew(Cold Coffe)"},
+    {"name":"Flappe(Cold Coffe)"}
+ ]

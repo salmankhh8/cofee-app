@@ -1,0 +1,125 @@
+import React, { useState } from 'react'
+import axios from "axios"
+import  "./Profile.css"
+
+const Profile = () => {
+  const [fileInputState, setFileInputState] = useState()
+  const [selectedFile , setSelectedFile] = useState(" ")
+  const [previewSource, setPreviewSource] = useState()
+  const handleFileInputChange=(e)=>{
+    const file=e.target.files[0]
+    previewFile(file)// call a function and pass file as aparameter
+  }
+  
+const previewFile = (file)=>{
+  const reader = new FileReader( )//filereader for js api
+  reader.readAsDataURL(file) // convert image to fileurl
+  reader.onloadend=()=>{
+    setPreviewSource (reader.result)
+  }
+}
+
+const handleSubmit=(e)=>{
+  e.preventDefault()
+  if(!previewSource)return;
+  uploadImage(previewSource)
+}
+
+
+
+  const uploadImage = async (base64EncodedImage)=>{
+  console.log(base64EncodedImage);/// url encoded
+  try {
+    await fetch("http://localhost:4000/upload-image",{
+      method:"POST",
+      body:JSON.stringify({data : base64EncodedImage}),
+    headers:{'Content-Type':'application/json'},
+ })
+    // await axios({
+    //   url:"http://localhost:4000/upload-image",
+    //   method:"POST",
+    //   body:JSON.stringify(base64EncodedImage),
+
+    // }).then((response)=>{
+    //   console.log(response.data);
+    // })
+  } catch (error) {
+    console.error(error)
+  }
+}
+  return (
+    <div style={{ color: 'white' , marginTop: '10rem'}}>
+        <form onSubmit={handleSubmit} action="">
+            <input type="file" name="image"  value={fileInputState} onChange={handleFileInputChange} className="upload" />
+            <button type="submit"  className="btn">Upload</button>
+        </form>
+        {previewSource  && <img src={previewSource} style={{height: "300px"}} />}
+    </div>
+  )
+}
+
+export default Profile;
+
+
+///////////////////////////////////////////////
+import React, { useState } from 'react'
+import axios from "axios"
+import  "./Profile.css"
+
+const Profile = () => {
+  const [fileInputState, setFileInputState] = useState()
+  const [selectedFile , setSelectedFile] = useState(" ")
+  const [previewSource, setPreviewSource] = useState()
+  const handleFileInputChange=(e)=>{
+    const file=e.target.files[0]
+    previewFile(file)// call a function and pass file as aparameter
+  }
+  
+const previewFile = (file)=>{
+  const reader = new FileReader( )//filereader for js api
+  reader.readAsDataURL(file) // convert image to fileurl
+  reader.onloadend=()=>{
+    setPreviewSource (reader.result)
+  }
+}
+
+const handleSubmit=(e)=>{
+  // e.preventDefault()
+  // if(!previewSource)return;
+  // uploadImage(previewSource)
+}
+
+
+
+  const uploadImage = async (base64EncodedImage)=>{
+  console.log(base64EncodedImage);/// url encoded
+  try {
+    await fetch("http://localhost:4000/upload-image",{
+      method:"POST",
+      body:JSON.stringify({data : base64EncodedImage}),
+    headers:{'Content-Type':'application/json'},
+ })
+    // await axios({
+    //   url:"http://localhost:4000/upload-image",
+    //   method:"POST",
+    //   body:JSON.stringify(base64EncodedImage),
+
+    // }).then((response)=>{
+    //   console.log(response.data);
+    // })
+  } catch (error) {
+    console.error(error)
+  }
+}
+  return (
+    <div style={{ color: 'white' , marginTop: '10rem'}}>
+        <form onSubmit={handleSubmit} action="">
+            <input type="file" name="image"  value={fileInputState} onChange={handleFileInputChange} className="upload" />
+            <button type="submit"  className="btn">Upload</button>
+        </form>
+        {previewSource  && <img src={previewSource} style={{height: "300px"}} />}
+    </div>
+  )
+}
+
+export default Profile;

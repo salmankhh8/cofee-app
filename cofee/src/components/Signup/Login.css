@@ -1,0 +1,27 @@
+body{
+    object-fit: cover;
+
+}
+.login{
+    margin-top:10rem;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    background: url("https://images3.alphacoders.com/941/thumb-1920-94135.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.login .contact{
+    position: absolute;
+    width: 70rem;
+    top: 30%;
+    }
+ .login .contact .row form .inputBox{
+    margin:  3rem 3rem;
+background: black !important;
+ }
+
+
+.login .contact .heading span{
+    color: #bb7d31;
+}

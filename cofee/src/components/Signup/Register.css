@@ -1,0 +1,42 @@
+body{
+    object-fit: cover;
+}
+
+input:-webkit-autofill{
+    color: #010103;
+}
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0  30px #13131a inset !important; 
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);  
+    background-color: #13131a;
+
+}
+.register{
+    margin-top: 10rem;
+    min-height: 84.5vh;
+    display: flex;
+    align-items: center;
+    background: url("https://images3.alphacoders.com/941/thumb-1920-94135.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.crop img{
+    width: 100px;
+    height: 100px;
+    margin-left: 25rem;
+    border-radius: 50%;
+    margin-right: 2rem;;
+}
+.register .contact  .inputBox{
+    height: 5rem;
+}
+
+.register .contact {
+    width: 75rem;
+}
+.register .contact .row form .inputBox{
+    margin:  1rem 2rem;
+background: black !important;
+ }
